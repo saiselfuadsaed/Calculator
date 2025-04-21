@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future Academy - Advanced Calculator</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      background: var(--bg);
+      font-family: Arial, sans-serif;
+      transition: background 0.5s ease;
+    }
+
+    :root {
+      --bg: #1e1e2f;
+      --primary: #2a2a40;
+      --btn: #35354f;
+      --btn-hover: #4f4f70;
+      --text: #00ff91;
+      --operator: #ff7f50;
+      --operator-hover: #ff6433;
+      --equal: #00ff91;
+      --equal-hover: #00e07c;
+    }
+
+    .light {
+      --bg: #e8e8e8;
+      --primary: #f4f4f4;
+      --btn: #d1d1d1;
+      --btn-hover: #bfbfbf;
+      --text: #222;
+      --operator: #0077ff;
+      --operator-hover: #0055cc;
+      --equal: #00b361;
+      --equal-hover: #008c4a;
+    }
+
+    h1 {
+      color: var(--text);
+      margin-bottom: 20px;
+      transition: color 0.5s ease;
+    }
+
+    .light h1 {
+      color: #333;
+    }
+
+    .calculator {
+      background: var(--primary);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+      width: 350px;
+      transition: background 0.5s ease;
+    }
+
+    .display {
+      background: var(--bg);
+      color: var(--text);
+      font-size: 2.3em;
+      border: none;
+      width: 100%;
+      height: 60px;
+      text-align: right;
+      padding: 10px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .button {
+      background: var(--btn);
+      border: none;
+      border-radius: 15px;
+      padding: 20px;
+      font-size: 1.3em;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background: var(--btn-hover);
+    }
+
+    .button.operator {
+      background: var(--operator);
+      color: #fff;
+    }
+
+    .button.operator:hover {
+      background: var(--operator-hover);
+    }
+
+    .button.equal {
+      background: var(--equal);
+      color: var(--primary);
+      grid-column: span 2;
+    }
+
+    .button.equal:hover {
+      background: var(--equal-hover);
+    }
+
+    .mode-toggle {
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 1em;
+      background: var(--operator);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      width: 100%;
+    }
+
+    .mode-toggle:hover {
+      background: var(--operator-hover);
+    }
+  </style>
+</head>
+<body>
+
+
+
+
+<div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+  <!-- أيقونة الصاروخ -->
+  <span style="font-size: 40px; margin-right: 10px;">🚀</span>
+  
+  <!-- عنوان الأكاديمية -->
+  <h1 style="color: yellow; margin: 0;">Future Academy</h1>
+</div>
+
+<div class="calculator">
+  <input type="text" class="display" id="display" disabled>
+  <div class="buttons">
+    <button class="button" onclick="clearDisplay()">C</button>
+    <button class="button" onclick="appendValue('%')">%</button>
+    <button class="button" onclick="appendValue('/')">÷</button>
+    <button class="button" onclick="appendValue('*')">×</button>
+
+    <button class="button" onclick="appendValue('7')">7</button>
+    <button class="button" onclick="appendValue('8')">8</button>
+    <button class="button" onclick="appendValue('9')">9</button>
+    <button class="button operator" onclick="appendValue('-')">-</button>
+
+    <button class="button" onclick="appendValue('4')">4</button>
+    <button class="button" onclick="appendValue('5')">5</button>
+    <button class="button" onclick="appendValue('6')">6</button>
+    <button class="button operator" onclick="appendValue('+')">+</button>
+
+    <button class="button" onclick="appendValue('1')">1</button>
+    <button class="button" onclick="appendValue('2')">2</button>
+    <button class="button" onclick="appendValue('3')">3</button>
+    <button class="button operator" onclick="appendValue('^')">^</button>
+
+    <button class="button" onclick="appendValue('0')">0</button>
+    <button class="button operator" onclick="appendValue('.')">.</button>
+    <button class="button operator" onclick="appendValue('Math.sqrt(')">√</button>
+    <button class="button operator" onclick="deleteLast()">←</button>
+
+    <button class="button equal" onclick="calculate()">=</button>
+  </div>
+
+  <button class="mode-toggle" onclick="toggleMode()">تبديل الوضع الليلي/النهاري</button>
+</div>
+
+<script>
+  let display = document.getElementById('display');
+  let isLight = false;
+
+  function appendValue(value) {
+    display.value += value;
+  }
+
+  function clearDisplay() {
+    display.value = '';
+  }
+
+  function deleteLast() {
+    display.value = display.value.slice(0, -1);
+  }
+
+  function calculate() {
+    try {
+      let expression = display.value.replace(/\^/g, '**');
+      display.value = eval(expression);
+    } catch {
+      display.value = 'خطأ';
+    }
+  }
+
+  function toggleMode() {
+    isLight = !isLight;
+    document.body.classList.toggle('light', isLight);
+  }
+</script>
+
+</body>
+</html>
