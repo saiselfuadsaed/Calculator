@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ريال مدريد أولاً وأخيراً</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: radial-gradient(circle, #000000, #001f3f);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Tajawal', sans-serif;
+      color: #00cfff;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00cfff, 0 0 20px #00cfff;
+    }
+
+    .logo-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px #00cfff) drop-shadow(0 0 40px #00cfff);
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        filter: drop-shadow(0 0 10px #00cfff);
+      }
+      100% {
+        filter: drop-shadow(0 0 30px #00cfff);
+      }
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      background-color: #00cfff;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00cfff;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #00a3cc;
+    }
+
+    .animate-rotate {
+      animation: rotate 10s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ريال مدريد أولاً وأخيراً</h1>
+
+  <div class="logo-container">
+    <img id="logo" src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="شعار ريال مدريد">
+  </div>
+
+  <div class="controls">
+    <button onclick="rotateLogo()">تدوير الشعار</button>
+    <button onclick="stopRotation()">إيقاف التدوير</button>
+  </div>
+
+  <script>
+    function rotateLogo() {
+      document.getElementById('logo').classList.add('animate-rotate');
+    }
+
+    function stopRotation() {
+      document.getElementById('logo').classList.remove('animate-rotate');
+    }
+
+    // تدوير الشعار تلقائياً عند تحميل الصفحة
+    window.onload = rotateLogo;
+  </script>
+
+</body>
+</html>
